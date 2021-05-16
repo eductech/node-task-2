@@ -1,4 +1,5 @@
 const { db } = require('../inMemoryDb');
+const tasksRepo = require('../tasks/tasks.memory.repository');
 
 const getAll = async () => db.users;
 
@@ -13,6 +14,7 @@ const create = async (user) => {
 
 const remove = async (userId) => {
   await db.delete(userId, 'users');
+  await tasksRepo.resetUserLink(userId);
 };
 
 const update = async (user) => {
