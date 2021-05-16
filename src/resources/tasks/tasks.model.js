@@ -1,29 +1,35 @@
 const { v4: uuid } = require('uuid');
 
-class Board {
+class Task {
   constructor({
     id = uuid(),
-    title = 'TITLE',
-    columns = [],
+    title = id,
+    order = NaN,
+    description = '',
+    userId,
+    boardId,
+    columnId,
   } = {}) {
     this.id = id;
     this.title = title;
-    this.columns = columns;
+    this.order = order;
+    this.description = description;
+    this.userId = userId;
+    this.boardId = boardId;
+    this.columnId = columnId;
   }
 
   static fromRequest(data) {
-    return new Board(data);
+    return new Task(data);
   }
 
-  static toResponse(board) {
-    const { id, title, columns } = board;
-    return { id, title, columns };
+  static toResponse(task) {
+    return task;
   }
 
-  static toDb(board) {
-    const { id, title, columns } = board;
-    return { id, title, columns };
+  static toDb(task) {
+    return task;
   }
 }
 
-module.exports = Board;
+module.exports = Task;

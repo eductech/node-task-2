@@ -1,22 +1,33 @@
 const { db } = require('../inMemoryDb');
 
-const getAll = async () => db.boards;
+const getAll = async () => db.tasks;
 
-const getById = async (boardId) => {
-  const board = await db.read(boardId, 'boards');
-  return board;
+const getById = async (taskId) => {
+  const task = await db.read(taskId, 'tasks');
+  return task;
 };
 
-const create = async (board) => {
-  await db.create(board, 'boards');
+const getByBoardId = async (boardId) => {
+  const tasks = await getAll();
+  return tasks.filter(({ boardId: taskBoardId }) => taskBoardId === boardId);
 };
 
-const remove = async (boardId) => {
-  await db.delete(boardId, 'boards');
+const create = async (task) => {
+  await db.create(task, 'tasks');
 };
 
-const update = async (board) => {
-  await db.update(board, 'boards');
+const remove = async (taskId) => {
+  await db.delete(taskId, 'tasks');
 };
 
-module.exports = { getAll, create, delete: remove, getById, update };
+const deleteByBoardId = async (boardId) => {
+  const tasks = await getAll();
+
+  db.tasks = tasks.filter(({ boardId: taskBoardId }) => taskBoardId !== boardId);
+};
+
+const update = async (task) => {
+  await db.update(task, 'tasks');
+};
+
+module.exports = { getAll, getByBoardId, create, delete: remove, getById, update, deleteByBoardId };

@@ -1,42 +1,44 @@
-const router = require('express').Router();
-const Board = require('./boards.model');
-const boardsService = require('./boards.service');
+const router = require('express').Router({mergeParams: true});
+const Task = require('./tasks.model');
+const tasksService = require('./tasks.service');
 
 router.route('/').get(async (req, res) => {
-  const boards = await boardsService.getAll();
+  const { boardId } = req.params;
+  const tasks = await tasksService.getAll(boardId);
 
-  res.json(boards.map(Board.toResponse));
+  res.json(tasks.map(Task.toResponse));
 });
 
 router.route('/').post(async (req, res) => {
-  const board = Board.fromRequest(req.body);
-  await boardsService.create(board);
+  const { boardId } = req.params;
+  const task = Task.fromRequest({ ...req.body, boardId });
+  await tasksService.create(task);
 
-  res.status(201).json(Board.toResponse(board));
+  res.status(201).json(Task.toResponse(task));
 });
 
-router.route('/:boardId').get(async (req, res) => {
-  const { boardId } = req.params;
-  const board = await boardsService.getById(boardId);
+router.route('/:taskId').get(async (req, res) => {
+  const { taskId } = req.params;
+  const task = await tasksService.getById(taskId);
 
-  if (!board) res.status(404).json('Not found');
+  if (!task) res.status(404).json('Not found');
 
-  res.json(Board.toResponse(board));
+  res.json(Task.toResponse(task));
 });
 
-router.route('/:boardId').delete(async (req, res) => {
-  const { boardId } = req.params;
-  await boardsService.delete(boardId);
+router.route('/:taskId').delete(async (req, res) => {
+  const { taskId } = req.params;
+  await tasksService.delete(taskId);
 
   res.json('ok');
 });
 
-router.route('/:boardId').put(async (req, res) => {
-  const { boardId } = req.params;
-  const board = Board.fromRequest({ ...req.body, boardId });
-  await boardsService.update(board);
+router.route('/:taskId').put(async (req, res) => {
+  const { taskId } = req.params;
+  const task = Task.fromRequest({ ...req.body, taskId });
+  await tasksService.update(task);
 
-  res.json(board);
+  res.json(task);
 });
 
 module.exports = router;

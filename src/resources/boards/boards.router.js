@@ -19,9 +19,11 @@ router.route('/:boardId').get(async (req, res) => {
   const { boardId } = req.params;
   const board = await boardsService.getById(boardId);
 
-  if (!board) res.status(404).json('Not found');
-
-  res.json(Board.toResponse(board));
+  if (board) {
+    res.json(Board.toResponse(board));
+  } else {
+    res.status(404).json('Not found');
+  }
 });
 
 router.route('/:boardId').delete(async (req, res) => {
