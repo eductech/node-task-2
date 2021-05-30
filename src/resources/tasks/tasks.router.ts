@@ -1,16 +1,21 @@
-const router = require('express').Router({mergeParams: true});
-const Task = require('./tasks.model');
-const tasksService = require('./tasks.service');
+import { Router } from 'express';
+import Task from './tasks.model';
+import * as tasksService from './tasks.service';
 
-router.route('/').get(async (req, res) => {
-  const { boardId } = req.params;
-  const tasks = await tasksService.getAll(boardId);
+interface Params {
+  boardId: string;
+}
 
-  res.json(tasks.map(Task.toResponse));
+const router = Router({mergeParams: true});
+
+router.route('/').get(async (_, res) => {
+  const tasks = await tasksService.getAll();
+
+  res.json(tasks.map((task) => Task.toResponse(task as Task)));
 });
 
 router.route('/').post(async (req, res) => {
-  const { boardId } = req.params;
+  const { boardId } = <Params>req.params;
   const task = Task.fromRequest({ ...req.body, boardId });
   await tasksService.create(task);
 
@@ -23,7 +28,7 @@ router.route('/:taskId').get(async (req, res) => {
 
   if (!task) res.status(404).json('Not found');
 
-  res.json(Task.toResponse(task));
+  res.json(Task.toResponse(task as Task));
 });
 
 router.route('/:taskId').delete(async (req, res) => {
@@ -41,4 +46,4 @@ router.route('/:taskId').put(async (req, res) => {
   res.json(task);
 });
 
-module.exports = router;
+export default router;

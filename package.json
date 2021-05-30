@@ -7,9 +7,9 @@
   },
   "type": "commonjs",
   "description": "REST service starter for RS School",
-  "main": "src/server.js",
+  "main": "src/server.ts",
   "scripts": {
-    "start": "nodemon --exec 'ts-node' --transpile-only src/server.js",
+    "start": "nodemon --exec 'ts-node' src/server.ts",
     "doc:gen": "jsdoc src -r -d jsdoc",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
@@ -54,6 +54,11 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.12",
+    "@types/swagger-ui-express": "^4.1.2",
+    "@types/uuid": "^8.3.0",
+    "@types/yamljs": "^0.2.31",
+    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@typescript-eslint/parser": "^4.25.0",
     "chai": "4.3.4",
     "debug": "4.3.1",
     "dirty-chai": "2.0.1",
