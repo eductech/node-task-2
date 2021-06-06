@@ -1,11 +1,13 @@
-const router = require('express').Router();
-const Board = require('./boards.model');
-const boardsService = require('./boards.service');
+import { Router } from 'express';
+import Board from './boards.model';
+import * as boardsService from './boards.service';
 
-router.route('/').get(async (req, res) => {
+const router = Router();
+
+router.route('/').get(async (_, res) => {
   const boards = await boardsService.getAll();
 
-  res.json(boards.map(Board.toResponse));
+  res.json(boards.map((board) => Board.toResponse(board as Board)));
 });
 
 router.route('/').post(async (req, res) => {
@@ -20,7 +22,7 @@ router.route('/:boardId').get(async (req, res) => {
   const board = await boardsService.getById(boardId);
 
   if (board) {
-    res.json(Board.toResponse(board));
+    res.json(Board.toResponse(board as Board));
   } else {
     res.status(404).json('Not found');
   }
@@ -41,4 +43,4 @@ router.route('/:boardId').put(async (req, res) => {
   res.json(board);
 });
 
-module.exports = router;
+export default router;

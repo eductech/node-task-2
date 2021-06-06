@@ -1,29 +1,40 @@
-const { v4: uuid } = require('uuid');
+import { v4 as uuid } from 'uuid';
+
+export interface Column {
+  order: number;
+  bordId: string;
+}
 
 class Board {
+  id: string;
+
+  title: string;
+
+  columns: Column[];
+
   constructor({
     id = uuid(),
     title = 'TITLE',
-    columns = [],
+    columns = [] as Column[],
   } = {}) {
     this.id = id;
     this.title = title;
     this.columns = columns;
   }
 
-  static fromRequest(data) {
+  static fromRequest(data: Board) {
     return new Board(data);
   }
 
-  static toResponse(board) {
+  static toResponse(board: Board) {
     const { id, title, columns } = board;
     return { id, title, columns };
   }
 
-  static toDb(board) {
+  static toDb(board: Board) {
     const { id, title, columns } = board;
     return { id, title, columns };
   }
 }
 
-module.exports = Board;
+export default Board;
