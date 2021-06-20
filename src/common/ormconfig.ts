@@ -13,16 +13,22 @@ import {
   DB_PASSWORD,
 } from './config';
 
-export const config: ConnectionOptions = {
+const config: ConnectionOptions = {
   type: 'postgres',
-  synchronize: true,
+  synchronize: false,
   host: DB_HOST,
   port: Number(DB_PORT),
   username: DB_USERNAME,
   password: DB_PASSWORD,
   database: DB_NAME,
   entities: [User, Board, Column, Task],
+  migrations: ['migration/*.ts'],
+  cli: {
+    'migrationsDir': 'migration',
+  },
   // autoReconnect: true,
   // reconnectTries: Number.MAX_VALUE,
   // reconnectionInterval: 1000,
 };
+
+export default config;
