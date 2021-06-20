@@ -12,7 +12,6 @@ router.route('/').get(async (req, res) => {
   const { boardId } = <Params>req.params;
   const tasks = await tasksService.getByBoardId(boardId);
 
-  // @ts-ignore
   res.json(tasks.map((task) => Task.toResponse(task as Task)));
 });
 
@@ -30,7 +29,6 @@ router.route('/:taskId').get(async (req, res) => {
 
   if (!task) res.status(404).json('Not found');
 
-  // @ts-ignore
   res.json(Task.toResponse(task as Task));
 });
 

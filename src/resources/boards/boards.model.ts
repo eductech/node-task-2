@@ -1,8 +1,12 @@
 import { v4 as uuid } from 'uuid';
 
+import { Column as ColumnEntity } from './Column';
+
 export interface Column {
+  id: string;
+  title: string;
   order: number;
-  bordId: string;
+  board: ColumnEntity['board'];
 }
 
 class Board {

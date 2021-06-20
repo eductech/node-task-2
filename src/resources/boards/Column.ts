@@ -24,7 +24,7 @@ class ColumnEntity {
     eager: true,
     cascade: true,
   })
-  tasks: Task[];
+  tasks?: Task[];
 }
 
 export { ColumnEntity as Column };

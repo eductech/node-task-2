@@ -1,13 +1,15 @@
 import { v4 as uuid } from 'uuid';
 
+import { Task as TaskEntity } from './Task';
+
 interface Params {
   id: string;
   title: string;
   order: number;
   description: string;
-  userId: string;
-  boardId: string;
-  columnId: string;
+  userId?: TaskEntity['userId'];
+  boardId: TaskEntity['boardId'];
+  columnId?: TaskEntity['columnId'];
 }
 
 class Task {
@@ -19,11 +21,11 @@ class Task {
 
   description: string;
 
-  userId?: string;
+  userId?: TaskEntity['userId'];
 
-  boardId?: string;
+  boardId: TaskEntity['boardId'];
 
-  columnId?: string;
+  columnId?: TaskEntity['columnId'];
 
   constructor({
     id = uuid(),
@@ -33,7 +35,7 @@ class Task {
     userId,
     boardId,
     columnId,
-  }: Partial<Params> = {}) {
+  }: Params = {} as Params) {
     this.id = id;
     this.title = title;
     this.order = order;

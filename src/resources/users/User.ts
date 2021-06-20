@@ -20,7 +20,7 @@ class User {
     eager: true,
     cascade: true,
   })
-  tasks: Task[];
+  tasks?: Task[];
 }
 
 export { User };

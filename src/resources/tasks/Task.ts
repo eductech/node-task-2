@@ -21,18 +21,18 @@ class Task {
   @ManyToOne(() => User, user => user.tasks, {
     onDelete: 'SET NULL',
   })
-  userId: User[];
+  userId?: User;
 
   @ManyToOne(() => Board, board => board.tasks, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'boardId' })
-  boardId: Board[];
+  boardId: Board;
 
   @ManyToOne(() => ColumnEntity, column => column.tasks, {
     onDelete: 'CASCADE',
   })
-  columnId: ColumnEntity[];
+  columnId?: ColumnEntity;
 }
 
 export { Task };

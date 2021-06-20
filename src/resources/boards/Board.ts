@@ -22,7 +22,7 @@ class Board {
     eager: true,
     cascade: true,
   })
-  tasks: Task[];
+  tasks?: Task[];
 }
 
 export { Board };
