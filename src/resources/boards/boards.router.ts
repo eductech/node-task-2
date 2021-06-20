@@ -7,6 +7,7 @@ const router = Router();
 router.route('/').get(async (_, res) => {
   const boards = await boardsService.getAll();
 
+  // @ts-ignore
   res.json(boards.map((board) => Board.toResponse(board as Board)));
 });
 
@@ -22,6 +23,7 @@ router.route('/:boardId').get(async (req, res) => {
   const board = await boardsService.getById(boardId);
 
   if (board) {
+    // @ts-ignore
     res.json(Board.toResponse(board as Board));
   } else {
     res.status(404).json('Not found');

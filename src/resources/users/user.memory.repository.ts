@@ -1,26 +1,33 @@
-import { db, DBRecord } from '../inMemoryDb';
-import * as tasksRepo from '../tasks/tasks.memory.repository';
+import { getRepository } from 'typeorm';
 
-import type User from './user.model';
+import { User } from './User';
 
-const getAll = async () => db.users;
+const getAll = async () => {
+  const userRepository = getRepository(User);
+  const users = await userRepository.find();
+  
+  return users;
+}
 
 const getById = async (userId: string) => {
-  const user = await db.read(userId, 'users');
+  const userRepository = getRepository(User);
+  const user = await userRepository.findOne(userId);
   return user;
 };
 
 const create = async (user: User) => {
-  await db.create(user as DBRecord, 'users');
+  const userRepository = getRepository(User);
+  await userRepository.save(user);
 };
 
 const remove = async (userId:string) => {
-  await db.delete(userId, 'users');
-  await tasksRepo.resetUserLink(userId);
+  const userRepository = getRepository(User);
+  await userRepository.delete(userId);
 };
 
 const update = async (user: User) => {
-  await db.update(user, 'users');
+  const userRepository = getRepository(User);
+  await userRepository.update(user.id, user);
 };
 
 export { getAll, getById, create, remove as delete, update };

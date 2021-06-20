@@ -1,45 +1,46 @@
-import { db, DBRecord } from '../inMemoryDb';
+import { getRepository } from 'typeorm';
 
-import type Task from './tasks.model';
+import { Task } from './Task';
 
-const getAll = async () => db.tasks;
+const getAll = async () => {
+  const taskRepository = getRepository(Task);
+  const tasks = await taskRepository.find();
+
+  return tasks;
+};
 
 const getById = async (taskId: string) => {
-  const task = await db.read(taskId, 'tasks');
+  const taskRepository = getRepository(Task);
+  const task = taskRepository.findOne(taskId, {
+    loadRelationIds: true,
+  });
+
   return task;
 };
 
 const getByBoardId = async (boardId: string) => {
-  const tasks = <Task[]>await getAll();
-  return tasks.filter(({ boardId: taskBoardId }) => taskBoardId === boardId);
+  const taskRepository = getRepository(Task);
+  const tasks = await taskRepository.find({
+    loadRelationIds: true,
+    where: { boardId: { id: boardId } },
+  });
+
+  return tasks;
 };
 
 const create = async (task: Task) => {
-  await db.create(task, 'tasks');
+  const taskRepository = getRepository(Task);
+  await taskRepository.save(task);
 };
 
 const remove = async (taskId: string) => {
-  await db.delete(taskId, 'tasks');
-};
-
-const deleteByBoardId = async (boardId: string) => {
-  const tasks = <Task[]>await getAll();
-
-  db.tasks = tasks.filter(({ boardId: taskBoardId }) => taskBoardId !== boardId);
+  const taskRepository = getRepository(Task);
+  await taskRepository.delete(taskId);
 };
 
 const update = async (task: Task) => {
-  await db.update(task, 'tasks');
+  const taskRepository = getRepository(Task);
+  await taskRepository.save(task);
 };
 
-const resetUserLink = async (userId: string) => {
-  const tasks = <Task[]>await getAll();
-
-  tasks.forEach((task) => {
-    if (userId === task.userId) {
-      db.update({ ...task, userId: null } as DBRecord, 'tasks');
-    };
-  });
-};
-
-export { getAll, getByBoardId, create, remove as delete, getById, update, deleteByBoardId, resetUserLink };
+export { getAll, getByBoardId, create, remove as delete, getById, update };
