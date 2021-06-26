@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import bcrypt from 'bcryptjs';
 
 class User {
   id: string;
@@ -18,7 +19,7 @@ class User {
     this.id = id;
     this.name = name;
     this.login = login;
-    this.password = password;
+    this.password = bcrypt.hashSync(password, 10);
   }
 
   static fromRequest(data: User) {
