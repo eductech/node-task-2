@@ -23,7 +23,7 @@ router.route('/').post(async (req, res) => {
         });
       }
       
-      return res.status(502).send({ error: "Passwords do not match." })
+      return res.status(403).send({ error: "Passwords do not match." })
     });
   }
 });
