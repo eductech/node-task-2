@@ -8,8 +8,9 @@ interface Params {
 
 const router = Router({mergeParams: true});
 
-router.route('/').get(async (_, res) => {
-  const tasks = await tasksService.getAll();
+router.route('/').get(async (req, res) => {
+  const { boardId } = <Params>req.params;
+  const tasks = await tasksService.getByBoardId(boardId);
 
   res.json(tasks.map((task) => Task.toResponse(task as Task)));
 });

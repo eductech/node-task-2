@@ -17,6 +17,21 @@ git clone {repository URL}
 npm install
 ```
 
+## Databse setup
+
+Inside progect repo:
+
+```
+cd src/common
+../../node_modules/.bin/ts-node ../../node_modules/.bin/typeorm migration:run
+```
+
+Then all nesswesary tablesand relations will be created. To revert migration:
+
+```
+../../node_modules/.bin/ts-node ../../node_modules/.bin/typeorm migration:revert
+```
+
 ## Running application
 
 ```

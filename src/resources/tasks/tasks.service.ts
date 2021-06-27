@@ -3,7 +3,7 @@ import Task from './tasks.model';
 
 
 const getAll = () => tasksRepo.getAll();
-
+ 
 const getByBoardId = (boardId: string) => tasksRepo.getByBoardId(boardId);
 
 const getById = (taskId: string) => tasksRepo.getById(taskId);

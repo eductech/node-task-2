@@ -1,26 +1,34 @@
-import { db } from '../inMemoryDb';
-import * as tasksRepo from '../tasks/tasks.memory.repository';
+import { getRepository } from 'typeorm';
 
-import type Board from './boards.model';
+import { Board } from './Board';
 
-const getAll = async () => db.boards;
+const getAll = async () => {
+  const boardRepository = getRepository(Board);
+  const boards = boardRepository.find();
+
+  return boards;
+}
 
 const getById = async (boardId: string) => {
-  const board = await db.read(boardId, 'boards');
+  const boardRepository = getRepository(Board);
+  const board = boardRepository.findOne(boardId);
+
   return board;
 };
 
 const create = async (board: Board) => {
-  await db.create(board, 'boards');
+  const boardRepository = getRepository(Board);
+  await boardRepository.save(board);
 };
 
 const remove = async (boardId: string) => {
-  await db.delete(boardId, 'boards');
-  await tasksRepo.deleteByBoardId(boardId);
+  const boardRepository = getRepository(Board);
+  await boardRepository.delete(boardId);
 };
 
 const update = async (board: Board) => {
-  await db.update(board, 'boards');
+  const boardRepository = getRepository(Board);
+  await boardRepository.save(board);
 };
 
 export { getAll, create, remove as delete, getById, update };
