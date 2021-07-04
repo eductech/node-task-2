@@ -34,6 +34,8 @@ Then all nesswesary tablesand relations will be created. To revert migration:
 
 ## Running application
 
+Inside progect root folder:
+
 ```
 npm start
 ```
