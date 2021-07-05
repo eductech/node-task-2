@@ -6,6 +6,7 @@ import {
   Put,
   Param,
   Delete,
+  NotFoundException,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -18,9 +19,9 @@ export class TasksController {
   @Post(':boardId/tasks')
   create(
     @Param('boardId') boardId: string,
-    @Body() createTaskDto: CreateTaskDto,
+    @Body() createTaskDto: CreateTaskDto
   ) {
-    return this.tasksService.create(createTaskDto);
+    return this.tasksService.create({ ...createTaskDto, boardId });
   }
 
   @Get(':boardId/tasks')
@@ -29,17 +30,24 @@ export class TasksController {
   }
 
   @Get(':boardId/tasks/:taskId')
-  findOne(@Param('boardId') boardId: string, @Param('taskId') taskId: string) {
-    return this.tasksService.getById(taskId);
+  async findOne(
+    @Param('boardId') boardId: string,
+    @Param('taskId') taskId: string
+  ) {
+    const task = await this.tasksService.getById(taskId);
+
+    if (task === undefined) throw new NotFoundException();
+
+    return task;
   }
 
-  @Put(':id')
+  @Put(':boardId/tasks/:taskId')
   update(
     @Param('boardId') boardId: string,
     @Param('taskId') taskId: string,
-    @Body() updateTaskDto: UpdateTaskDto,
+    @Body() updateTaskDto: UpdateTaskDto
   ) {
-    return this.tasksService.update(taskId, updateTaskDto);
+    return this.tasksService.update(taskId, { ...updateTaskDto, boardId });
   }
 
   @Delete(':boardId/tasks/:taskId')

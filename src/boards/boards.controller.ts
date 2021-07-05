@@ -6,6 +6,7 @@ import {
   Put,
   Param,
   Delete,
+  NotFoundException,
 } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
@@ -26,8 +27,12 @@ export class BoardsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.boardsService.getById(id);
+  async findOne(@Param('id') id: string) {
+    const board = await this.boardsService.getById(id);
+
+    if (board === undefined) throw new NotFoundException();
+
+    return board;
   }
 
   @Put(':id')

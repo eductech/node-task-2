@@ -9,7 +9,7 @@ import { Board } from './entities/board.entity';
 export class BoardsService {
   constructor(
     @InjectRepository(Board)
-    private boardsRepository: Repository<Board>,
+    private boardsRepository: Repository<Board>
   ) {}
 
   create(createBoardDto: CreateBoardDto) {
@@ -27,6 +27,8 @@ export class BoardsService {
 
   async getById(id: string) {
     const board = await this.boardsRepository.findOne(id);
+
+    if (!board) return undefined;
 
     return {
       ...board,
