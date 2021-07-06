@@ -48,6 +48,4 @@ process.on('unhandledRejection', (reason) => {
   logger.error(`Unhandled rejection detected: ${JSON.stringify(reason)}`);
 });
 
-export {
-  app
-};
+export { app };

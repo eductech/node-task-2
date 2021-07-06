@@ -13,7 +13,7 @@ class User {
   @Column('varchar')
   login: string;
 
-  @Column({ select: false })
+  @Column('varchar')
   password: string;
 
   @OneToMany(() => Task, (task) => task.userId, {

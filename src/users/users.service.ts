@@ -1,22 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcryptjs';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
-export class UsersService {
+export class UsersService implements OnApplicationBootstrap {
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    private usersRepository: Repository<User>
   ) {}
+
+  async onApplicationBootstrap(): Promise<void> {
+    const user = await this.getByLogin('admin');
+
+    if (!user) {
+      await this.create({ login: 'admin', password: 'admin', name: 'admin' });
+    }
+  }
 
   async create(createUserDto: CreateUserDto) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...user } = await this.usersRepository.save(
-      createUserDto,
-    );
+    const { password, ...user } = await this.usersRepository.save({
+      ...createUserDto,
+      password: bcrypt.hashSync(createUserDto.password, 10),
+    });
     return { ...user };
   }
 
