@@ -8,15 +8,15 @@ class User {
   id: string;
 
   @Column('varchar')
-  name: string = 'USER';
+  name = 'USER';
 
   @Column('varchar')
-  login: string = 'user';
+  login = 'user';
 
   @Column('varchar')
-  password: string = 'P@55w0rd';
+  password = 'P@55w0rd';
 
-  @OneToMany(() => Task, task => task.userId, {
+  @OneToMany(() => Task, (task) => task.userId, {
     eager: true,
     cascade: true,
   })

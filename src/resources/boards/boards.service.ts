@@ -8,7 +8,7 @@ const getAll = async (): Promise<Board[]> => {
     ...board,
     columns: board.columns.sort((a, b) => a.order - b.order),
   }));
-}
+};
 
 const getById = async (boardId: string): Promise<Board | undefined> => {
   const board = await boardsRepo.getById(boardId);
@@ -19,7 +19,7 @@ const getById = async (boardId: string): Promise<Board | undefined> => {
     ...board,
     columns: board.columns.sort((a, b) => a.order - b.order),
   };
-}
+};
 
 const create = (board: Board) => boardsRepo.create(Board.toDb(board));
 

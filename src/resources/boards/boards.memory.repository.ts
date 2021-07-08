@@ -7,7 +7,7 @@ const getAll = async () => {
   const boards = boardRepository.find();
 
   return boards;
-}
+};
 
 const getById = async (boardId: string) => {
   const boardRepository = getRepository(Board);

@@ -8,7 +8,6 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
-import { Observable } from 'rxjs';
 import * as jwt from 'jsonwebtoken';
 import { JWT_SECRET_KEY } from '../../common/config';
 import { UsersService } from '../users.service';

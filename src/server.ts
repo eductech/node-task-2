@@ -22,7 +22,3 @@ import User from './resources/users/user.model';
     logger.error('Application startup failed', error);
   }
 })();
-
-
-
-

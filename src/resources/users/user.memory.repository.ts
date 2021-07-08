@@ -5,9 +5,9 @@ import { User } from './User';
 const getAll = async () => {
   const userRepository = getRepository(User);
   const users = await userRepository.find();
-  
+
   return users;
-}
+};
 
 const getByLogin = async (login: string) => {
   const userRepository = getRepository(User);
@@ -26,7 +26,7 @@ const create = async (user: User) => {
   await userRepository.save(user);
 };
 
-const remove = async (userId:string) => {
+const remove = async (userId: string) => {
   const userRepository = getRepository(User);
   await userRepository.delete(userId);
 };

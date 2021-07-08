@@ -5,13 +5,7 @@ import { Board } from '../resources/boards/Board';
 import { Column } from '../resources/boards/Column';
 import { Task } from '../resources/tasks/Task';
 
-import {
-  DB_HOST,
-  DB_PORT,
-  DB_NAME,
-  DB_USERNAME,
-  DB_PASSWORD,
-} from './config';
+import { DB_HOST, DB_PORT, DB_NAME, DB_USERNAME, DB_PASSWORD } from './config';
 
 const config: ConnectionOptions = {
   type: 'postgres',
@@ -24,7 +18,7 @@ const config: ConnectionOptions = {
   entities: [User, Board, Column, Task],
   migrations: ['migration/*.ts'],
   cli: {
-    'migrationsDir': 'migration',
+    migrationsDir: 'migration',
   },
   // autoReconnect: true,
   // reconnectTries: Number.MAX_VALUE,

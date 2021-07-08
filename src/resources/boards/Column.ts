@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 
 import { Task } from '../tasks/Task';
 
@@ -10,17 +16,17 @@ class ColumnEntity {
   id: string;
 
   @Column('varchar')
-  title: string = 'TITLE';
+  title = 'TITLE';
 
   @Column('integer')
   order: number;
 
-  @ManyToOne(() => Board, board => board.columns, {
+  @ManyToOne(() => Board, (board) => board.columns, {
     onDelete: 'CASCADE',
   })
   board: Board[];
 
-  @OneToMany(() => Task, task => task.userId, {
+  @OneToMany(() => Task, (task) => task.userId, {
     eager: true,
     cascade: true,
   })

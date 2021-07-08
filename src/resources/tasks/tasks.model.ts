@@ -27,15 +27,17 @@ class Task {
 
   columnId?: TaskEntity['columnId'];
 
-  constructor({
-    id = uuid(),
-    title = id,
-    order = NaN,
-    description = '',
-    userId,
-    boardId,
-    columnId,
-  }: Params = {} as Params) {
+  constructor(
+    {
+      id = uuid(),
+      title = id,
+      order = NaN,
+      description = '',
+      userId,
+      boardId,
+      columnId,
+    }: Params = {} as Params
+  ) {
     this.id = id;
     this.title = title;
     this.order = order;

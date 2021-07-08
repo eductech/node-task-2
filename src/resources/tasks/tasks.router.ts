@@ -6,7 +6,7 @@ interface Params {
   boardId: string;
 }
 
-const router = Router({mergeParams: true});
+const router = Router({ mergeParams: true });
 
 router.route('/').get(async (req, res) => {
   const { boardId } = <Params>req.params;

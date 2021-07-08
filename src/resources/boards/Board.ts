@@ -10,15 +10,15 @@ class Board {
   id: string;
 
   @Column('varchar')
-  title: string = 'TITLE';
+  title = 'TITLE';
 
-  @OneToMany(() => ColumnEntity, column => column.board, {
+  @OneToMany(() => ColumnEntity, (column) => column.board, {
     eager: true,
     cascade: true,
   })
   columns: ColumnEntity[];
 
-  @OneToMany(() => Task, task => task.userId, {
+  @OneToMany(() => Task, (task) => task.userId, {
     eager: true,
     cascade: true,
   })

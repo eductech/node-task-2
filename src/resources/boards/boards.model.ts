@@ -16,11 +16,7 @@ class Board {
 
   columns: Column[];
 
-  constructor({
-    id = uuid(),
-    title = 'TITLE',
-    columns = [] as Column[],
-  } = {}) {
+  constructor({ id = uuid(), title = 'TITLE', columns = [] as Column[] } = {}) {
     this.id = id;
     this.title = title;
     this.columns = columns;
