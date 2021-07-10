@@ -8,9 +8,9 @@ import {
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { AppService } from './app.service';
-import { Public } from './users/decorators/public.decorator';
-import { UsersService } from './users/users.service';
-import { LoginDto } from './users/dto/login.dto';
+import { Public } from './resources/users/decorators/public.decorator';
+import { UsersService } from './resources/users/users.service';
+import { LoginDto } from './resources/users/dto/login.dto';
 import { JWT_SECRET_KEY } from './common/config';
 
 @Controller()

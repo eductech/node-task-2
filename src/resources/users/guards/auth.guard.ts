@@ -9,7 +9,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
 import * as jwt from 'jsonwebtoken';
-import { JWT_SECRET_KEY } from '../../common/config';
+import { JWT_SECRET_KEY } from '../../../common/config';
 import { UsersService } from '../users.service';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 
