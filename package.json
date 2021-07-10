@@ -13,7 +13,8 @@
     "doc:gen": "jsdoc src -r -d jsdoc",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
-    "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace"
+    "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
+    "test:artillery":  "artillery run users-test.yml"
   },
   "keywords": [
     "rs",
@@ -52,6 +53,7 @@
     "@nestjs/platform-fastify": "^7.6.18",
     "@nestjs/typeorm": "^7.1.5",
     "app-root-path": "^3.0.0",
+    "artillery": "^1.7.6",
     "bcryptjs": "^2.4.3",
     "cross-env": "7.0.3",
     "dotenv": "9.0.0",

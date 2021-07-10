@@ -97,3 +97,61 @@ npm run lint
 Press <kbd>F5</kbd> to debug.
 
 For more information, visit: https://code.visualstudio.com/docs/editor/debugging
+
+## Performance comparison
+
+**Express**
+```
+All virtual users finished
+Summary report @ 22:49:06(+0300) 2021-07-10
+  Scenarios launched:  300
+  Scenarios completed: 42
+  Requests completed:  285
+  Mean response/sec: 7.16
+  Response time (msec):
+    min: 31
+    max: 9987
+    median: 6585
+    p95: 9677.5
+    p99: 9968.3
+  Scenario counts:
+    Create user and check: 300 (100%)
+  Codes:
+    200: 42
+    201: 243
+  Errors:
+    ETIMEDOUT: 258
+```
+
+**Fastify**
+```
+All virtual users finished
+Summary report @ 23:01:13(+0300) 2021-07-10
+  Scenarios launched:  300
+  Scenarios completed: 41
+  Requests completed:  282
+  Mean response/sec: 7.14
+  Response time (msec):
+    min: 21
+    max: 9955
+    median: 6473
+    p95: 9555.4
+    p99: 9874.4
+  Scenario counts:
+    Create user and check: 300 (100%)
+  Codes:
+    200: 41
+    201: 241
+  Errors:
+    ETIMEDOUT: 259
+```
+
+### Response time summary (ms)
+
+| Param       | Express     | Fastify     |
+| ----------- | ----------- | ----------- |
+| min         | 31          | 21          |
+| max         | 9987        | 9955        |
+| median      | 6585        | 6473        |
+| p95         | 9677.5      | 9555.4      |
+| p99         | 9968.3      | 9874.4      |
