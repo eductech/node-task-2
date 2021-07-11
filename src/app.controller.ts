@@ -5,19 +5,20 @@ import {
   Body,
   ForbiddenException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { AppService } from './app.service';
 import { Public } from './resources/users/decorators/public.decorator';
 import { UsersService } from './resources/users/users.service';
 import { LoginDto } from './resources/users/dto/login.dto';
-import { JWT_SECRET_KEY } from './common/config';
 
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
+    private readonly configService: ConfigService
   ) {}
 
   @Public()
@@ -38,7 +39,7 @@ export class AppController {
       if (matches) {
         const token = jwt.sign(
           { userId: user.id, login: user.login },
-          JWT_SECRET_KEY as string,
+          this.configService.get<string>('JWT_SECRET_KEY'),
           { expiresIn: 60 * 60 * 24 }
         );
 
