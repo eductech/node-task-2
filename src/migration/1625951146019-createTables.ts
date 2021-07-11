@@ -1,8 +1,7 @@
-/* eslint-disable class-methods-use-this */
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class CreateTables1624194537030 implements MigrationInterface {
-  name = 'CreateTables1624194537030';
+export class aa1625951146019 implements MigrationInterface {
+  name = 'aa1625951146019';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -12,7 +11,7 @@ export class CreateTables1624194537030 implements MigrationInterface {
       `CREATE TABLE "board" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "title" character varying NOT NULL, CONSTRAINT "PK_865a0f2e22c140d261b1df80eb1" PRIMARY KEY ("id"))`
     );
     await queryRunner.query(
-      `CREATE TABLE "task" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "title" character varying NOT NULL, "order" integer NOT NULL, "description" character varying NOT NULL, "userIdId" uuid, "boardId" uuid, "columnIdId" uuid, CONSTRAINT "PK_fb213f79ee45060ba925ecd576e" PRIMARY KEY ("id"))`
+      `CREATE TABLE "task" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "title" character varying NOT NULL, "order" integer NOT NULL, "description" character varying NOT NULL, "userIdId" uuid, "boardIdId" uuid, "columnIdId" uuid, CONSTRAINT "PK_fb213f79ee45060ba925ecd576e" PRIMARY KEY ("id"))`
     );
     await queryRunner.query(
       `CREATE TABLE "user" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, "login" character varying NOT NULL, "password" character varying NOT NULL, CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id"))`
@@ -24,7 +23,7 @@ export class CreateTables1624194537030 implements MigrationInterface {
       `ALTER TABLE "task" ADD CONSTRAINT "FK_29c593b244774c65824ae1df648" FOREIGN KEY ("userIdId") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE NO ACTION`
     );
     await queryRunner.query(
-      `ALTER TABLE "task" ADD CONSTRAINT "FK_d88edac9d7990145ff6831a7bb3" FOREIGN KEY ("boardId") REFERENCES "board"("id") ON DELETE CASCADE ON UPDATE NO ACTION`
+      `ALTER TABLE "task" ADD CONSTRAINT "FK_61a750180758aaf4a589ccefaa9" FOREIGN KEY ("boardIdId") REFERENCES "board"("id") ON DELETE CASCADE ON UPDATE NO ACTION`
     );
     await queryRunner.query(
       `ALTER TABLE "task" ADD CONSTRAINT "FK_4f196ca1ee5d10a97018d33a114" FOREIGN KEY ("columnIdId") REFERENCES "column"("id") ON DELETE CASCADE ON UPDATE NO ACTION`
@@ -36,7 +35,7 @@ export class CreateTables1624194537030 implements MigrationInterface {
       `ALTER TABLE "task" DROP CONSTRAINT "FK_4f196ca1ee5d10a97018d33a114"`
     );
     await queryRunner.query(
-      `ALTER TABLE "task" DROP CONSTRAINT "FK_d88edac9d7990145ff6831a7bb3"`
+      `ALTER TABLE "task" DROP CONSTRAINT "FK_61a750180758aaf4a589ccefaa9"`
     );
     await queryRunner.query(
       `ALTER TABLE "task" DROP CONSTRAINT "FK_29c593b244774c65824ae1df648"`
