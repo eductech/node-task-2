@@ -1,5 +1,6 @@
-import morgan from 'morgan';
-import http from 'http';
+/* eslint-disable @typescript-eslint/ban-types */
+import * as morgan from 'morgan';
+import * as http from 'http';
 
 interface RequestData extends http.IncomingMessage {
   query: object;

@@ -1,17 +1,43 @@
-import * as tasksRepo from './tasks.memory.repository';
-import Task from './tasks.model';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CreateTaskDto } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
+import { Task } from './entities/task.entity';
 
+@Injectable()
+export class TasksService {
+  constructor(
+    @InjectRepository(Task)
+    private tasksRepository: Repository<Task>
+  ) {}
 
-const getAll = () => tasksRepo.getAll();
- 
-const getByBoardId = (boardId: string) => tasksRepo.getByBoardId(boardId);
+  create(createTaskDto: CreateTaskDto) {
+    return this.tasksRepository.save(createTaskDto);
+  }
 
-const getById = (taskId: string) => tasksRepo.getById(taskId);
+  getAll() {
+    return this.tasksRepository.find();
+  }
 
-const create = (task: Task) => tasksRepo.create(Task.toDb(task));
+  getById(id: string) {
+    return this.tasksRepository.findOne(id, {
+      loadRelationIds: true,
+    });
+  }
 
-const remove = (taskId: string) => tasksRepo.delete(taskId);
+  getByBoardId(id: string) {
+    return this.tasksRepository.find({
+      loadRelationIds: true,
+      where: { boardId: { id } },
+    });
+  }
 
-const update = (task: Task) => tasksRepo.update(Task.toDb(task));
+  update(id: string, updateTaskDto: UpdateTaskDto) {
+    return this.tasksRepository.save(updateTaskDto);
+  }
 
-export { getAll, getByBoardId, create, remove as delete, getById, update };
+  remove(id: string) {
+    return this.tasksRepository.delete(id);
+  }
+}
