@@ -22,14 +22,13 @@ npm install
 Inside progect repo:
 
 ```
-cd src/common
-../../node_modules/.bin/ts-node ../../node_modules/.bin/typeorm migration:run
+npm run migration:run
 ```
 
-Then all nesswesary tablesand relations will be created. To revert migration:
+Then all nessesary tablesand relations will be created. To revert migration:
 
 ```
-../../node_modules/.bin/ts-node ../../node_modules/.bin/typeorm migration:revert
+npm run migration:revert
 ```
 
 ## Running application
